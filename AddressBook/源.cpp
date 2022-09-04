@@ -75,9 +75,30 @@ void addPerson(Addressbooks * p)
 		cout << "请输入年龄" << endl;
 		cin >> age;
 		p->personArray[p->size].m_age = age;
+
+		p->size++;
 	}
 
 }
+
+void showPerson(struct Addressbooks * adb) {
+	if (adb->size == 0) {
+		cout << "当前通讯录暂无联系人" << endl;
+		
+	}
+	else {
+		for (int i = 0; i < adb->size; i++) {
+			cout << i + 1 << "." << adb->personArray[i].m_name
+				<< "," << adb->personArray[i].m_age
+				<< "," << adb->personArray[i].m_sex
+				<< "," << adb->personArray[i].m_phoneNumber
+				<< "," << adb->personArray[i].m_address << endl;
+		}
+	}
+	system("pause");
+	system("cls");//清屏
+
+};
 int main() {
 	int select = 0;
 	//创建通讯录
@@ -94,6 +115,7 @@ int main() {
 			addPerson(&newBook);
 			break;
 		case 2:
+			showPerson(&newBook);
 			break;
 		case 3:
 			break;
