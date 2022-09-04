@@ -13,13 +13,25 @@
 #include<iostream>
 #include<string>
 using namespace std;
-
-struct people {
-	string name;
-	string sex;
-	int age;
-	string phoneNumber;
-	string address;
+#define max 1000 //规定通讯录大小
+/*
+添加联系人实现步骤
+1. 设计联系人结构体
+2. 设计通讯录结构体
+3. main函数中创建通讯录
+4. 封装添加联系人函数
+4. 测试功能
+*/
+struct Person {
+	string m_name;
+	string m_sex;
+	int m_age;
+	string m_phoneNumber;
+	string m_address;
+};
+struct Addressbooks {
+	struct Person personArray[max];
+	int size;
 };
 void showMenu() {
 	cout << "**************************" << endl;
@@ -32,13 +44,54 @@ void showMenu() {
 	cout << "*****  0.退出通讯录  *****" << endl;
 	cout << "**************************" << endl;
 };
+void addPerson(Addressbooks * p) 
+{
+	if (p->size == max) {
+		cout << "通讯录已满无法添加" << endl;
+		return;
+	}
+	else {
+		string name;
+		cout << "请输入姓名" << endl;
+		cin >> name;
+		p->personArray[p->size].m_name = name;
+
+		string sex;
+		cout << "请输入性别" << endl;
+		cin >> sex;
+		p->personArray[p->size].m_sex = sex;
+
+		string address;
+		cout << "请输入地址" << endl;
+		cin >> address;
+		p->personArray[p->size].m_address = address;
+
+		string phone;
+		cout << "请输入电话" << endl;
+		cin >> phone;
+		p->personArray[p->size].m_phoneNumber = phone;
+
+		int age;
+		cout << "请输入年龄" << endl;
+		cin >> age;
+		p->personArray[p->size].m_age = age;
+	}
+
+}
 int main() {
 	int select = 0;
+	//创建通讯录
+	Addressbooks newBook;
+	//初始化通讯录人员个数
+	newBook.size = 0;
+	
+
 	while (true) {
 		showMenu();
 		cin >> select;
 		switch (select) {
 		case 1:
+			addPerson(&newBook);
 			break;
 		case 2:
 			break;
