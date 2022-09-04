@@ -99,6 +99,93 @@ void showPerson(struct Addressbooks * adb) {
 	system("cls");//清屏
 
 };
+
+int seek(struct Addressbooks * ads) {
+	if (ads->size == 0) {
+		cout << "通讯录为空！请添加联系人" << endl;
+		system("pause");
+		return -1;
+	}
+	string seekName;
+	cout << "请输入联系人姓名" << endl;
+	cin >> seekName;
+	int i = 0;
+	while (i < ads->size) {
+		if (ads->personArray[i].m_name == seekName)
+			{return i; }
+			i++;
+		
+		
+	}
+	cout << "未找到联系人！" << endl;
+	system("pause");
+	return -1;
+};
+
+void changePerson(Addressbooks* ads, int i) {
+	int number = 0;
+	while (number != 6) {
+		cout << "请选择要修改的信息:1.姓名，2.性别，3.地址，4.电话，5.年龄，6.退出修改" << endl;
+		cin >> number;
+		string n_name;
+		string n_sex;
+		string n_address;
+		string n_phone;
+		int n_age;
+
+		switch (number) {
+		case 1:
+		{
+			cout << "请输入姓名：" << endl;
+			cin >> n_name;
+			ads->personArray[i].m_name = n_name; }
+			break;
+		case 2:
+		{
+			cout << "请输入性别：" << endl;
+			cin >> n_sex;
+			ads->personArray[i].m_sex = n_sex; }
+		break;
+		case 3:
+		{
+			cout << "请输入地址：" << endl;
+			cin >> n_address;
+			ads->personArray[i].m_address = n_address; }
+		break;
+		case 4:
+		{
+			cout << "请输入电话：" << endl;
+			cin >> n_phone;
+			ads->personArray[i].m_phoneNumber = n_phone; }
+		break;
+		case 5:
+		{
+			cout << "请输入年龄：" << endl;
+			cin >> n_age;
+			ads->personArray[i].m_age = n_age; }
+		break;
+		case 6:
+			system("pause");
+			break;
+		}
+	}
+	
+};
+void deletPerson(Addressbooks * ads, int i) {
+	for (; i < ads->size - 1; i++) {
+		ads->personArray[i] = ads->personArray[i + 1];
+	}
+	ads->size--;
+	cout << "删除完毕！" << endl;
+	system("pause");
+};
+
+void cleanBook(Addressbooks* ads) {
+	ads->size = 0;
+	cout << "清除成功！"<< endl;
+	system("pause");
+	system("cls");
+}
 int main() {
 	int select = 0;
 	//创建通讯录
@@ -118,12 +205,33 @@ int main() {
 			showPerson(&newBook);
 			break;
 		case 3:
+		{
+			int i = seek(&newBook);
+			if (i != -1) {
+				deletPerson(&newBook, i);
+			}
+		}
 			break;
 		case 4:
+		{int i = seek(&newBook);
+		if (i != -1) {
+			cout << i + 1 << "." << newBook.personArray[i].m_name
+				<< "," << newBook.personArray[i].m_age
+				<< "," << newBook.personArray[i].m_sex
+				<< "," << newBook.personArray[i].m_phoneNumber
+				<< "," << newBook.personArray[i].m_address << endl;
+		}}
 			break;
 		case 5:
+		{
+			int i = seek(&newBook);
+			if (i != -1) {
+				changePerson(&newBook, i);
+			}
+		}
 			break;
 		case 6:
+			cleanBook(&newBook);
 			break;
 		case 0:
 			cout << "欢迎下次使用！" << endl;
